@@ -13,6 +13,13 @@ export default {
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
 }
 .clearfix::after, .clearfix::before {
   content: '';
@@ -24,11 +31,16 @@ export default {
   visibility: hidden;
 }
 body {
+  user-select: none;
+  line-height: 1.2 !important;
   background-color: #fff;
 }
-body, input, ul, li, button {
+body, input, ul, li, button, h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
 }
 ul, li {
   list-style: none;
