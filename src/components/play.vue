@@ -8,12 +8,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #play {
   position: fixed;
   left: 0;
+  top: 0;
   right: 0;
-  z-index: 21;
+  bottom: 0;
+  margin: auto;
+  z-index: 9999999;
   background-color: #fff;
   height: 100%;
   width: 100%;
