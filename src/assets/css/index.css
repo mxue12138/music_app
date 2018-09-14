@@ -14,7 +14,7 @@
   width: 100%;
   overflow: hidden;
   z-index: 12;
-  box-shadow: 0px 0px 10px #999;
+  box-shadow: 0 0 0.625rem #999;
   background-color: #fff;
   position: fixed;
   left: 0;
@@ -48,11 +48,18 @@
 #index .top .option .mu-radio-icon {
   margin-right: 0.125rem;
 }
+#index .list {
+  overflow-y: scroll;
+  min-height: 100%;
+  padding-top: 5.625rem;
+}
 #index .list.bottom {
   padding-bottom: 4.0625rem;
 }
+#index .list .mu-load-more {
+  /*position: static;*/
+}
 #index .list .mu-list {
-  padding-top: 5.625rem;
   padding-bottom: 0;
 }
 #index .list .mu-item {
@@ -65,12 +72,9 @@
 #index .list .mu-item-action .mu-icon {
   font-size: 1.75rem;
 }
-#index .list .mu-infinite-scroll {
-  height: 2.1875rem;
-}
 #index .palyer {
   padding: 0 0.375rem;
-  box-shadow:0px 0px 10px #999;
+  box-shadow:0 0 0.625rem #999;
   border: 0.0625rem solid #ccc;
   height: 4.0625rem;
   width: 100%;

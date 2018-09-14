@@ -16,17 +16,16 @@
         <mu-radio v-model="searchOption" value="baidu" label="百度"></mu-radio>
       </mu-flex>
     </div>
-    <div class="list" v-if="searchList != ''" :class="{ bottom: showPlayer && searchList }">
-      <mu-load-more :loading="loading" @load="load" :loaded-all="loadAll">
+    <div class="list" :class="{ bottom: showPlayer && searchList }">
+      <mu-load-more :refreshing="refreshing" @refresh="refresh" :loading="loading" @load="load" :loaded-all="loadAll">
         <mu-list :dense="true">
           <template v-for="(item, index) in searchList">
-            <mu-divider></mu-divider>
              <mu-list-item avatar :ripple="false" button @click="getInfo(index)">
               <mu-list-item-content>
                 <mu-list-item-title>{{ item.name }}</mu-list-item-title>
                 <mu-list-item-sub-title>
                   {{ item.artist.join('、') }}
-                  <span v-show="item.album">&nbsp;-&nbsp;《{{ item.album }}》</span>
+                  <span v-if="item.album">&nbsp;-&nbsp;《{{ item.album }}》</span>
                 </mu-list-item-sub-title>
               </mu-list-item-content>
               <mu-list-item-action @click.stop="getInfo(index)">
@@ -37,6 +36,7 @@
                 <mu-icon value="arrow_downward"></mu-icon>
               </mu-list-item-action>
             </mu-list-item>
+            <mu-divider></mu-divider>
           </template>
         </mu-list>
       </mu-load-more>
@@ -62,7 +62,7 @@
       </div>
     </transition>
     <transition name="page">
-      <router-view/>
+      <play v-if="showPlayPage"></play>
     </transition>
   </mu-container>
 </template>

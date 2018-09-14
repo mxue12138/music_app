@@ -1,3 +1,4 @@
+import play from '../../components/play'
 import axios from 'axios'
 export default {
   name: 'index',
@@ -15,6 +16,8 @@ export default {
       palyerInfo: {},
       // 存放正在播放的列表
       palyerList: {},
+      // 标识播放页面是否显示
+      showPlayPage: false,
       // 标识当前底部播放器是否显示
       showPlayer: false,
       // 标识当前歌曲是否正在播放
@@ -25,6 +28,8 @@ export default {
       loading: false,
       // 标识列表数据是否全部加载完成
       loadAll: false,
+      // 标识当前是否正在加载数据
+      refreshing: false,
       // 标识当前搜索的页面
       page: 1,
       // 标识当前正在播放的歌曲索引
@@ -33,7 +38,13 @@ export default {
       progress: 0
     }
   },
+  components: {
+    play
+  },
   methods: {
+    refresh () {
+      // 这个函数没什么用，框架有点bug，只能写一个空的函数了。
+    },
     load () {
       this.loading = true;
       this.page += 1;
@@ -53,10 +64,23 @@ export default {
       })
     },
     search () {
+      if (localStorage.getItem('history')) {
+        var history = JSON.parse(localStorage.getItem('history'));
+        if (history.indexOf(this.searchText.trim()) != -1) {
+          history.splice(history.indexOf(this.searchText.trim()), 1);
+        }
+        history.push(this.searchText.trim());
+        localStorage.setItem('history', JSON.stringify(history));
+      } else {
+        var history = [];
+        history.push(this.searchText.trim());
+        localStorage.setItem('history', JSON.stringify(history));
+      }
       this.loadAll = false;
       this.page = 1;
       if (this.searchText.trim() != '') {
         this.searchList = [];
+        this.refreshing = true;
         // 获取搜索数据
         axios({
           method: 'post',
@@ -66,6 +90,7 @@ export default {
           },
           data: 'types=search&count=25&source=' + this.searchOption + '&pages=' + this.page + '&name=' + this.searchText.trim()
         }).then((data) => {
+          this.refreshing = false;
           this.searchList = this.searchList.concat(data.data);
           this.$set(this.searchInfo, 'searchOption', this.searchOption);
           this.$set(this.searchInfo, 'searchText', this.searchText.trim());
@@ -230,7 +255,7 @@ export default {
       this.getInfo(this.index + 1);
     },
     playPage () {
-      this.$router.push({path: '/play'});
+      this.showPlayPage = true;
     }
   }
 }
